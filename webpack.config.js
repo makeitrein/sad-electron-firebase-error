@@ -1,12 +1,10 @@
 var path = require('path')
 var webpack = require('webpack')
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: './app/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
     filename: 'build.js'
   },
   module: {
@@ -22,19 +20,13 @@ module.exports = {
       }
     ]
   },
-  vue: {
-    loaders: {
-      css: ExtractTextPlugin.extract("css")
-    }
-  },
   babel: {
-    "presets": ["es2015", "stage-0"],
+    "presets": ["es2015"],
     "plugins": ["transform-runtime"]
   },
   plugins: [
-    new ExtractTextPlugin("style.css"),
-    new webpack.ExternalsPlugin('commonjs2', [
-      'electron',
+    new webpack.ExternalsPlugin('commonjs', [
+      'electron'
     ])
   ]
 }

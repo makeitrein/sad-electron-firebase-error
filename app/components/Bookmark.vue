@@ -30,22 +30,3 @@
 
   }
 </script>
-
-<style>
-  #links-container .list .item {
-    padding: 15px;
-  }
-
-  .item .description {
-    margin-top: 5px;
-  }
-
-  i.remove.icon {
-    opacity: 0;
-    transition: opacity .25s ease-in-out;
-  }
-
-  div.content:hover i.remove.icon {
-    opacity: 0.5;
-  }
-</style>

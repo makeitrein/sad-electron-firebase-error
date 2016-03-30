@@ -43,31 +43,3 @@
   }
 
 </script>
-
-<style>
-  #links-container {
-    position: fixed;
-    top: 0;
-    left: 300px;
-    right: 0;
-    bottom: 0;
-    overflow: auto;
-    background-color: #D4D9DA;
-    color: #5F676A;
-  }
-
-  #links-container .list {
-    margin-top: 0px;
-  }
-
-  #toolbar {
-    background-color: #D4D9DA;
-    border-bottom: 1px;
-    border-bottom-style: solid;
-    border-bottom-color: #C2C7CA;
-    height: 60px;
-    padding-top: 10px;
-    padding-left: 30px;
-    padding-right: 30px;
-  }
-</style>

@@ -2,7 +2,7 @@ import { EventEmitter } from 'events'
 import Firebase from 'firebase'
 
 // ENTER YOUR FIREBASE URL BELOW
-const db = new Firebase("https://YOUR_FIREBASE_APP.firebaseio.com/")
+const db = new Firebase("https://crackling-heat-6785.firebaseio.com/")
 const categoriesRef = db.child('categories')
 const bookmarksRef = db.child('bookmarks')
 const store = new EventEmitter()
@@ -24,7 +24,7 @@ store.addCategory = (category) => {
 }
 
 store.deleteCategory = (catName) => {
-  // first check if an 'Uncategorized' category, if not, create it
+  // first check if an 'Uncategorized' category exists, if not, create it
   if (!('Uncategorized' in categories)) {
     categoriesRef.update({'Uncategorized': 'white'})
   }
