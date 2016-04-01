@@ -38,7 +38,7 @@
     },
 
     created () {
-      store.on('bookmarks-updated', this.updateListings)
+      store.on('data-updated', this.updateListings)
     },
 
     methods: {
@@ -55,19 +55,3 @@
 
   }
 </script>
-
-<style>
-@import url(https://fonts.googleapis.com/css?family=Raleway:400,300);
-body {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  overflow: hidden;
-  height: 100%;
-  max-height: 100%;
-}
-
-.right-float {
-  float: right;
-}
-</style>

@@ -15,7 +15,7 @@ db.on('value', (snapshot) => {
   if (bookmarkData) {
     categories = bookmarkData.categories
     bookmarks = bookmarkData.bookmarks
-    store.emit('bookmarks-updated', categories, bookmarks)
+    store.emit('data-updated', categories, bookmarks)
   }
 })
 

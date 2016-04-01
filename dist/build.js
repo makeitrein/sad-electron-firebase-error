@@ -9990,13 +9990,12 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__webpack_require__(4)
-	__vue_script__ = __webpack_require__(8)
+	__vue_script__ = __webpack_require__(4)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] app/App.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(29)
+	__vue_template__ = __webpack_require__(25)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -10018,343 +10017,25 @@
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(5);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(7)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./App.vue", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./App.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(6)();
-	// imports
-	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Raleway:400,300);", ""]);
-
-	// module
-	exports.push([module.id, "\nbody {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  overflow: hidden;\n  height: 100%;\n  max-height: 100%;\n}\n\n.right-float {\n  float: right;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 6 */
-/***/ function(module, exports) {
-
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	// css base code, injected by the css-loader
-	module.exports = function() {
-		var list = [];
-
-		// return the list of modules as css string
-		list.toString = function toString() {
-			var result = [];
-			for(var i = 0; i < this.length; i++) {
-				var item = this[i];
-				if(item[2]) {
-					result.push("@media " + item[2] + "{" + item[1] + "}");
-				} else {
-					result.push(item[1]);
-				}
-			}
-			return result.join("");
-		};
-
-		// import a list of modules into the list
-		list.i = function(modules, mediaQuery) {
-			if(typeof modules === "string")
-				modules = [[null, modules, ""]];
-			var alreadyImportedModules = {};
-			for(var i = 0; i < this.length; i++) {
-				var id = this[i][0];
-				if(typeof id === "number")
-					alreadyImportedModules[id] = true;
-			}
-			for(i = 0; i < modules.length; i++) {
-				var item = modules[i];
-				// skip already imported module
-				// this implementation is not 100% perfect for weird media query combinations
-				//  when a module is imported multiple times with different media queries.
-				//  I hope this will never occur (Hey this way we have smaller bundles)
-				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-					if(mediaQuery && !item[2]) {
-						item[2] = mediaQuery;
-					} else if(mediaQuery) {
-						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-					}
-					list.push(item);
-				}
-			}
-		};
-		return list;
-	};
-
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	var stylesInDom = {},
-		memoize = function(fn) {
-			var memo;
-			return function () {
-				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-				return memo;
-			};
-		},
-		isOldIE = memoize(function() {
-			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
-		}),
-		getHeadElement = memoize(function () {
-			return document.head || document.getElementsByTagName("head")[0];
-		}),
-		singletonElement = null,
-		singletonCounter = 0,
-		styleElementsInsertedAtTop = [];
-
-	module.exports = function(list, options) {
-		if(false) {
-			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
-		}
-
-		options = options || {};
-		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-		// tags it will allow on a page
-		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
-
-		// By default, add <style> tags to the bottom of <head>.
-		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
-
-		var styles = listToStyles(list);
-		addStylesToDom(styles, options);
-
-		return function update(newList) {
-			var mayRemove = [];
-			for(var i = 0; i < styles.length; i++) {
-				var item = styles[i];
-				var domStyle = stylesInDom[item.id];
-				domStyle.refs--;
-				mayRemove.push(domStyle);
-			}
-			if(newList) {
-				var newStyles = listToStyles(newList);
-				addStylesToDom(newStyles, options);
-			}
-			for(var i = 0; i < mayRemove.length; i++) {
-				var domStyle = mayRemove[i];
-				if(domStyle.refs === 0) {
-					for(var j = 0; j < domStyle.parts.length; j++)
-						domStyle.parts[j]();
-					delete stylesInDom[domStyle.id];
-				}
-			}
-		};
-	}
-
-	function addStylesToDom(styles, options) {
-		for(var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
-			if(domStyle) {
-				domStyle.refs++;
-				for(var j = 0; j < domStyle.parts.length; j++) {
-					domStyle.parts[j](item.parts[j]);
-				}
-				for(; j < item.parts.length; j++) {
-					domStyle.parts.push(addStyle(item.parts[j], options));
-				}
-			} else {
-				var parts = [];
-				for(var j = 0; j < item.parts.length; j++) {
-					parts.push(addStyle(item.parts[j], options));
-				}
-				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
-			}
-		}
-	}
-
-	function listToStyles(list) {
-		var styles = [];
-		var newStyles = {};
-		for(var i = 0; i < list.length; i++) {
-			var item = list[i];
-			var id = item[0];
-			var css = item[1];
-			var media = item[2];
-			var sourceMap = item[3];
-			var part = {css: css, media: media, sourceMap: sourceMap};
-			if(!newStyles[id])
-				styles.push(newStyles[id] = {id: id, parts: [part]});
-			else
-				newStyles[id].parts.push(part);
-		}
-		return styles;
-	}
-
-	function insertStyleElement(options, styleElement) {
-		var head = getHeadElement();
-		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
-		if (options.insertAt === "top") {
-			if(!lastStyleElementInsertedAtTop) {
-				head.insertBefore(styleElement, head.firstChild);
-			} else if(lastStyleElementInsertedAtTop.nextSibling) {
-				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
-			} else {
-				head.appendChild(styleElement);
-			}
-			styleElementsInsertedAtTop.push(styleElement);
-		} else if (options.insertAt === "bottom") {
-			head.appendChild(styleElement);
-		} else {
-			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
-		}
-	}
-
-	function removeStyleElement(styleElement) {
-		styleElement.parentNode.removeChild(styleElement);
-		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
-		if(idx >= 0) {
-			styleElementsInsertedAtTop.splice(idx, 1);
-		}
-	}
-
-	function createStyleElement(options) {
-		var styleElement = document.createElement("style");
-		styleElement.type = "text/css";
-		insertStyleElement(options, styleElement);
-		return styleElement;
-	}
-
-	function addStyle(obj, options) {
-		var styleElement, update, remove;
-
-		if (options.singleton) {
-			var styleIndex = singletonCounter++;
-			styleElement = singletonElement || (singletonElement = createStyleElement(options));
-			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
-			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
-		} else {
-			styleElement = createStyleElement(options);
-			update = applyToTag.bind(null, styleElement);
-			remove = function() {
-				removeStyleElement(styleElement);
-			};
-		}
-
-		update(obj);
-
-		return function updateStyle(newObj) {
-			if(newObj) {
-				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
-					return;
-				update(obj = newObj);
-			} else {
-				remove();
-			}
-		};
-	}
-
-	var replaceText = (function () {
-		var textStore = [];
-
-		return function (index, replacement) {
-			textStore[index] = replacement;
-			return textStore.filter(Boolean).join('\n');
-		};
-	})();
-
-	function applyToSingletonTag(styleElement, index, remove, obj) {
-		var css = remove ? "" : obj.css;
-
-		if (styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = replaceText(index, css);
-		} else {
-			var cssNode = document.createTextNode(css);
-			var childNodes = styleElement.childNodes;
-			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
-			if (childNodes.length) {
-				styleElement.insertBefore(cssNode, childNodes[index]);
-			} else {
-				styleElement.appendChild(cssNode);
-			}
-		}
-	}
-
-	function applyToTag(styleElement, obj) {
-		var css = obj.css;
-		var media = obj.media;
-		var sourceMap = obj.sourceMap;
-
-		if (media) {
-			styleElement.setAttribute("media", media);
-		}
-
-		if (sourceMap) {
-			// https://developer.chrome.com/devtools/docs/javascript-debugging
-			// this makes source maps inside style tags work properly in Chrome
-			css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */';
-			// http://stackoverflow.com/a/26603875
-			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
-		}
-
-		if (styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = css;
-		} else {
-			while(styleElement.firstChild) {
-				styleElement.removeChild(styleElement.firstChild);
-			}
-			styleElement.appendChild(document.createTextNode(css));
-		}
-	}
-
-
-/***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 
-	var _store = __webpack_require__(9);
+	var _store = __webpack_require__(5);
 
 	var _store2 = _interopRequireDefault(_store);
 
-	var _Sidebar = __webpack_require__(12);
+	var _Sidebar = __webpack_require__(8);
 
 	var _Sidebar2 = _interopRequireDefault(_Sidebar);
 
-	var _BookmarkList = __webpack_require__(21);
+	var _BookmarkList = __webpack_require__(17);
 
 	var _BookmarkList2 = _interopRequireDefault(_BookmarkList);
 
-	var _filters = __webpack_require__(27);
+	var _filters = __webpack_require__(23);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10394,7 +10075,7 @@
 	  },
 
 	  created: function created() {
-	    _store2.default.on('bookmarks-updated', this.updateListings);
+	    _store2.default.on('data-updated', this.updateListings);
 	  },
 
 
@@ -10410,25 +10091,9 @@
 
 	};
 	// </script>
-	//
-	// <style>
-	// @import url(https://fonts.googleapis.com/css?family=Raleway:400,300);
-	// body {
-	//   margin: 0;
-	//   padding: 0;
-	//   border: 0;
-	//   overflow: hidden;
-	//   height: 100%;
-	//   max-height: 100%;
-	// }
-	//
-	// .right-float {
-	//   float: right;
-	// }
-	// </style>
 
 /***/ },
-/* 9 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10437,9 +10102,9 @@
 	  value: true
 	});
 
-	var _events = __webpack_require__(10);
+	var _events = __webpack_require__(6);
 
-	var _firebase = __webpack_require__(11);
+	var _firebase = __webpack_require__(7);
 
 	var _firebase2 = _interopRequireDefault(_firebase);
 
@@ -10459,7 +10124,7 @@
 	  if (bookmarkData) {
 	    categories = bookmarkData.categories;
 	    bookmarks = bookmarkData.bookmarks;
-	    store.emit('bookmarks-updated', categories, bookmarks);
+	    store.emit('data-updated', categories, bookmarks);
 	  }
 	});
 
@@ -10492,7 +10157,7 @@
 	exports.default = store;
 
 /***/ },
-/* 10 */
+/* 6 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -10796,7 +10461,7 @@
 
 
 /***/ },
-/* 11 */
+/* 7 */
 /***/ function(module, exports) {
 
 	/*! @license Firebase v2.4.2
@@ -11082,16 +10747,16 @@
 
 
 /***/ },
-/* 12 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(13)
+	__vue_script__ = __webpack_require__(9)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] app/components/Sidebar.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(20)
+	__vue_template__ = __webpack_require__(16)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -11110,7 +10775,7 @@
 	})()}
 
 /***/ },
-/* 13 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11119,15 +10784,15 @@
 	  value: true
 	});
 
-	var _store = __webpack_require__(9);
+	var _store = __webpack_require__(5);
 
 	var _store2 = _interopRequireDefault(_store);
 
-	var _CategoryModal = __webpack_require__(14);
+	var _CategoryModal = __webpack_require__(10);
 
 	var _CategoryModal2 = _interopRequireDefault(_CategoryModal);
 
-	var _BookmarkModal = __webpack_require__(17);
+	var _BookmarkModal = __webpack_require__(13);
 
 	var _BookmarkModal2 = _interopRequireDefault(_BookmarkModal);
 
@@ -11213,16 +10878,16 @@
 	// <script>
 
 /***/ },
-/* 14 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(15)
+	__vue_script__ = __webpack_require__(11)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] app/components/CategoryModal.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(16)
+	__vue_template__ = __webpack_require__(12)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -11241,7 +10906,7 @@
 	})()}
 
 /***/ },
-/* 15 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11250,7 +10915,7 @@
 	  value: true
 	});
 
-	var _store = __webpack_require__(9);
+	var _store = __webpack_require__(5);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -11271,11 +10936,6 @@
 	      var newCategory = {};
 	      newCategory[this.catName] = this.catColor;
 	      _store2.default.addCategory(newCategory);
-	      $('#cat-modal').modal('hide');
-	      this.catName = this.catColor = '';
-	    },
-	    deleteCategory: function deleteCategory() {
-	      _store2.default.deleteCategory(this.catName);
 	      $('#cat-modal').modal('hide');
 	    }
 	  },
@@ -11328,22 +10988,22 @@
 	// <script>
 
 /***/ },
-/* 16 */
+/* 12 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\n<div id=\"cat-modal\" class=\"ui small modal\">\n  <i class=\"close icon\"></i>\n  <div class=\"header\">\n    Add a new category\n  </div>\n  <div class=\"content\">\n\n    <form class=\"ui form\">\n      <div class=\"field\">\n        <label>Category name</label>\n        <input v-model=\"catName\" type=\"text\" placeholder=\"Enter a category name...\">\n      </div>\n      <div class=\"field\">\n        <label>Category color</label>\n        <select v-model=\"catColor\" class=\"ui simple dropdown\">\n          <option value=\"\">Select a color</option>\n          <option v-for=\"color in categoryColors\"\n            value=\"{{color}}\">\n            {{color | capitalize}}\n          </option>\n        </select>\n      </div>\n    </form>\n\n  </div>\n  <div class=\"actions\">\n    <div @click=\"addCategory\" class=\"ui purple inverted button\">Save</div>\n  </div>\n</div>\n\n";
 
 /***/ },
-/* 17 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(18)
+	__vue_script__ = __webpack_require__(14)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] app/components/BookmarkModal.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(19)
+	__vue_template__ = __webpack_require__(15)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -11362,7 +11022,7 @@
 	})()}
 
 /***/ },
-/* 18 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11371,7 +11031,7 @@
 	  value: true
 	});
 
-	var _store = __webpack_require__(9);
+	var _store = __webpack_require__(5);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -11452,28 +11112,28 @@
 	// <script>
 
 /***/ },
-/* 19 */
+/* 15 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\n<div id=\"bookmark-modal\" class=\"ui small modal\">\n  <i class=\"close icon\"></i>\n  <div class=\"header\">\n    Add a new bookmark\n  </div>\n  <div class=\"content\">\n\n    <form class=\"ui form\">\n      <div class=\"field\">\n        <label>Bookmark Title</label>\n        <input v-model=\"bookmarkTitle\" type=\"text\" placeholder=\"Enter a title for your bookmark...\">\n      </div>\n      <div class=\"field\">\n        <label>Bookmark URL</label>\n        <input v-model=\"bookmarkUrl\" type=\"text\" placeholder=\"Enter the URL for your bookmark...\">\n      </div>\n      <div class=\"field\">\n        <label>Bookmark category</label>\n        <select v-model=\"bookmarkCategory\" class=\"ui simple dropdown\">\n          <option value=\"\">Select a category</option>\n          <template v-for=\"(name, color) in categories\">\n            <option value=\"{{ name }}\">{{ name }}</option>\n          </template>\n        </select>\n      </div>\n    </form>\n\n  </div>\n  <div class=\"actions\">\n    <div @click=\"addBookmark\" class=\"ui inverted purple button\">Add</div>\n  </div>\n</div>\n\n";
 
 /***/ },
-/* 20 */
+/* 16 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div>\n  <div id=\"categories\">\n    <div id=\"cat-header\">\n      <h2><i class=\"bookmark icon\"></i>Bookmark | coligo</h2>\n    </div>\n    <div class=\"container\">\n      <h2>Categories\n        <span class=\"clickable right-float\">\n          <i @click=\"addCategory\" class=\"add icon\"></i>\n        </span>\n      </h2>\n      <div class=\"ui list\">\n        <div class=\"item clickable\">\n          <div class=\"content\">\n            <a class=\"ui grey empty circular label\"></a>\n            <span @click=\"categorySelected('')\">All</span>\n          </div>\n        </div>\n        <div v-for=\"(name, color) in categories\" class=\"item clickable\">\n          <div class=\"content\">\n            <a class=\"ui {{ color }} empty circular label\"></a>\n            <span @click=\"categorySelected(name)\"\n              :class=\"{selected: selectedCategory === name}\">\n              {{ name }}\n            </span>\n            <i v-if=\"name !== 'Uncategorized'\" class=\"remove icon right-float\"\n              @click=\"deleteCategory(name)\">\n            </i>\n          </div>\n        </div>\n      </div>\n      <button @click=\"addBookmark\"\n        class=\"ui grey inverted basic icon circular button right-float\">\n        <i class=\"icon add\"></i>\n      </button>\n    </div>\n  </div>\n  <category-modal></category-modal>\n  <bookmark-modal :categories=\"categories\"></bookmark-modal>\n</div>\n";
 
 /***/ },
-/* 21 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(22)
+	__vue_script__ = __webpack_require__(18)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] app/components/BookmarkList.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(28)
+	__vue_template__ = __webpack_require__(24)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -11492,7 +11152,7 @@
 	})()}
 
 /***/ },
-/* 22 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11501,11 +11161,11 @@
 	  value: true
 	});
 
-	var _Bookmark = __webpack_require__(23);
+	var _Bookmark = __webpack_require__(19);
 
 	var _Bookmark2 = _interopRequireDefault(_Bookmark);
 
-	var _filters = __webpack_require__(27);
+	var _filters = __webpack_require__(23);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11553,16 +11213,16 @@
 	// </script>
 
 /***/ },
-/* 23 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(24)
+	__vue_script__ = __webpack_require__(20)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] app/components/Bookmark.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(26)
+	__vue_template__ = __webpack_require__(22)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -11581,7 +11241,7 @@
 	})()}
 
 /***/ },
-/* 24 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11590,9 +11250,9 @@
 	  value: true
 	});
 
-	var _electron = __webpack_require__(25);
+	var _electron = __webpack_require__(21);
 
-	var _store = __webpack_require__(9);
+	var _store = __webpack_require__(5);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -11628,19 +11288,19 @@
 	// </script>
 
 /***/ },
-/* 25 */
+/* 21 */
 /***/ function(module, exports) {
 
-	module.exports = electron-prebuilt;
+	module.exports = require("electron");
 
 /***/ },
-/* 26 */
+/* 22 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div @click=\"openLink\" class=\"item\">\n  <div class=\"content\">\n    <i @click.stop=\"deleteBookmark\" class=\"icon remove right-float\"></i>\n    <a class=\"header\">{{title}}</a>\n    <div class=\"description\">\n      {{url}}\n      <a class=\"ui {{categoryColor}} tiny label right-float\">{{category}}</a>\n    </div>\n  </div>\n</div>\n";
 
 /***/ },
-/* 27 */
+/* 23 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -11670,13 +11330,13 @@
 	}
 
 /***/ },
-/* 28 */
+/* 24 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div id=\"links-container\">\n  <div id=\"toolbar\">\n    <div class=\"ui inverted icon fluid input\">\n      <input v-model=\"query\" type=\"text\" placeholder=\"Filter your links...\">\n      <i class=\"search icon\"></i>\n    </div>\n  </div>\n  <div class=\"ui relaxed divided selection list\">\n    <bookmark v-for=\"(id, bookmark) in bookmarks | filterByTitle query\"\n      :id=\"id\"\n      :title=\"bookmark.title\"\n      :url=\"bookmark.url\"\n      :category=\"bookmark.category\"\n      :category-color=\"categories[bookmark.category]\">\n    </bookmark>\n  </div>\n</div>\n";
 
 /***/ },
-/* 29 */
+/* 25 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div id=\"app\">\n  <sidebar\n    :categories=\"categories\"\n    v-on:category-selected=\"setSelectedCategory\">\n    <!-- bind 'selected-category event to the event handler setSelectedCategory' -->\n  </sidebar>\n  <bookmark-list\n    :bookmarks=\"bookmarks | filterByCategory selectedCategory\"\n    :categories=\"categories\">\n  </bookmark-list>\n</div>\n";

@@ -53,12 +53,6 @@
         newCategory[this.catName] = this.catColor
         store.addCategory(newCategory)
         $('#cat-modal').modal('hide')
-        this.catName = this.catColor = ''
-      },
-
-      deleteCategory () {
-        store.deleteCategory(this.catName)
-        $('#cat-modal').modal('hide')
       }
 
     },
