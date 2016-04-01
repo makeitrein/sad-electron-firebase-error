@@ -10005,7 +10005,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "/Users/fady/Desktop/bookmarking-app/github-code/app/App.vue"
+	  var id = "/Users/fady/dev/coligo/bookmarking-app-with-electron-vuejs-firebase/github-code/app/App.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -10111,7 +10111,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// ENTER YOUR FIREBASE URL BELOW
-	var db = new _firebase2.default("https://crackling-heat-6785.firebaseio.com/");
+	var db = new _firebase2.default("https://YOUR_FIREBASE_APP.firebaseio.com/");
 	var categoriesRef = db.child('categories');
 	var bookmarksRef = db.child('bookmarks');
 	var store = new _events.EventEmitter();
@@ -10766,7 +10766,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "/Users/fady/Desktop/bookmarking-app/github-code/app/components/Sidebar.vue"
+	  var id = "/Users/fady/dev/coligo/bookmarking-app-with-electron-vuejs-firebase/github-code/app/components/Sidebar.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -10897,7 +10897,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "/Users/fady/Desktop/bookmarking-app/github-code/app/components/CategoryModal.vue"
+	  var id = "/Users/fady/dev/coligo/bookmarking-app-with-electron-vuejs-firebase/github-code/app/components/CategoryModal.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -11013,7 +11013,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "/Users/fady/Desktop/bookmarking-app/github-code/app/components/BookmarkModal.vue"
+	  var id = "/Users/fady/dev/coligo/bookmarking-app-with-electron-vuejs-firebase/github-code/app/components/BookmarkModal.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -11143,7 +11143,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "/Users/fady/Desktop/bookmarking-app/github-code/app/components/BookmarkList.vue"
+	  var id = "/Users/fady/dev/coligo/bookmarking-app-with-electron-vuejs-firebase/github-code/app/components/BookmarkList.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -11232,7 +11232,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "/Users/fady/Desktop/bookmarking-app/github-code/app/components/Bookmark.vue"
+	  var id = "/Users/fady/dev/coligo/bookmarking-app-with-electron-vuejs-firebase/github-code/app/components/Bookmark.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {

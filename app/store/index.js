@@ -2,7 +2,7 @@ import { EventEmitter } from 'events'
 import Firebase from 'firebase'
 
 // ENTER YOUR FIREBASE URL BELOW
-const db = new Firebase("https://crackling-heat-6785.firebaseio.com/")
+const db = new Firebase("https://YOUR_FIREBASE_APP.firebaseio.com/")
 const categoriesRef = db.child('categories')
 const bookmarksRef = db.child('bookmarks')
 const store = new EventEmitter()
