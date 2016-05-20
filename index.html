@@ -8,10 +8,25 @@
 </head>
 
 <body>
-  <app></app>
-  <script>window.$ = window.jQuery = require('jquery')</script>
-  <script src="static/semantic.min.js"></script>
-  <script src="dist/build.js"></script>
+<app></app>
+<script>window.$ = window.jQuery = require('jquery')</script>
+<script src="static/semantic.min.js"></script>
+<script src="dist/build.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AAAA",
+    authDomain: "YOUGOHERE.firebaseapp.com",
+    databaseURL: "https:/HERETOO.firebaseio.com",
+    storageBucket: "",
+  };
+
+  firebase.initializeApp(config);
+
+</script>
+
 </body>
 
 </html>
